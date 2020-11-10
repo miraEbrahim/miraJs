@@ -1,15 +1,15 @@
 module.exports = function(grunt) {
   require('jit-grunt')(grunt);
   grunt.initConfig({
-    // jshint: {
-    //   files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-    //   options: {
-    //     globals: {
-    //       jQuery: true
-    //     }
-    //   }
-    // },
-    sass: {
+    jshint: {
+      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+      options: {
+        globals: {
+          jQuery: true
+        }
+      }
+    },
+    less: {
       dist: {
         options: {
           sourcemap: false,
@@ -18,21 +18,19 @@ module.exports = function(grunt) {
           style: 'expanded',
         },
         files: {
-          "src/css/index.css": "src/sass/index.scss",
-          "src/css/home.css": "src/sass/home.scss",
-          "src/css/cover.css": "src/sass/cover.scss",
-          "src/css/service.css": "src/sass/service.scss",
+          "src/css/index.css": "src/less/index.less",
           },
         }
       },
   
     
     watch: {
-      // files: ['<%= jshint.files %>'],
-      tasks: ['sass'],
+      files: ['<%= jshint.files %>'],
+      tasks: ['jshint'],
+      tasks: ['less'],
       styles: {
-          files: 'src/**/*.scss',
-          tasks: ['sass'],
+          files: 'src/**/*.less',
+          tasks: ['less'],
           options: {
             nospawn: true
           }
@@ -42,7 +40,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.registerTask('default', ['sass', 'watch']);
-
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.registerTask('default', ['less', 'watch']);
+  grunt.registerTask(['jshint', 'watch']);
 };
